@@ -3,371 +3,264 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Homework Helper — Request Help</title>
-  <meta name="description" content="Type your homework problem and send by Email or iMessage. Mobile-first, light-friendly theme." />
+  <title>Writer90a Quick Service Form — Coursework Help</title>
+  <meta name="description" content="Professional coursework and assignment help service. Calculate price and submit your details.">
   <style>
-    /* ---------------------------
-       Homework Helper - Light theme (no popup)
-       - Mobile-first
-       - Softer outer coloring (easy on the eyes)
-       - Large visible send buttons for Email & iMessage
-       --------------------------- */
-    :root{
-      --bg-from: #f6f9ff;    /* very light, soft blue */
-      --bg-to:   #fbfcff;    /* near-white */
-      --card-bg: #ffffff;
-      --muted:   #55607a;
-      --accent-1:#3aa0c9;    /* teal-ish */
-      --accent-2:#6b8cff;    /* soft indigo */
-      --accent-strong: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      --success: #0ea47a;
-      --danger:  #e04848;
+    :root {
+      --bg: #f7faff;
+      --card: #ffffff;
+      --muted: #5a6270;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #16a34a;
+      --accent-hover: #15803d;
+      --danger: #dc2626;
       --radius: 12px;
-      --shadow: 0 8px 26px rgba(11,18,34,0.06);
-      --max-w: 980px;
+      --shadow: 0 6px 18px rgba(0,0,0,0.06);
+      --max-w: 780px;
     }
 
-    * { box-sizing: border-box; }
-    html,body { height:100%; margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; -webkit-font-smoothing:antialiased; color:#07203a; }
     body {
-      background: linear-gradient(180deg, var(--bg-from), var(--bg-to));
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: var(--bg);
+      color: #1e293b;
     }
 
-    .wrap { max-width: var(--max-w); margin:20px auto; padding:16px; }
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .header p {
+      margin: 6px 0 12px;
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    .btn-top {
+      background: var(--primary);
+      color: white;
+      padding: 12px 18px;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-top:hover {
+      background: var(--primary-hover);
+    }
 
     .card {
-      background: var(--card-bg);
+      background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding:16px;
-      overflow:hidden;
+      padding: 20px;
+      margin-top: 24px;
     }
 
-    /* Header */
-    .header { display:flex; gap:12px; align-items:center; margin-bottom:10px; }
-    .brand {
-      width:56px; height:56px; border-radius:10px;
-      background: linear-gradient(135deg, #bfeaf5 0%, #e6eaff 100%);
-      display:flex; align-items:center; justify-content:center; font-weight:800; color:#044b5b; box-shadow:0 8px 18px rgba(10,20,30,0.04);
+    form { display: grid; gap: 16px; }
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      font-size: 14px;
     }
-    h1 { margin:0; font-size:18px; color:#07203a; }
-    p.lead { margin:6px 0 0; color:var(--muted); font-size:14px; }
-
-    /* Form */
-    form { display:grid; gap:12px; margin-top:12px; }
-    label { display:block; font-weight:700; color:#07203a; margin-bottom:6px; font-size:13px; }
     textarea, input, select {
-      width:100%; padding:12px; border-radius:10px; border:1px solid #e6edf4; font-size:15px;
-      box-shadow: 0 6px 18px rgba(11,18,34,0.03);
-      background: #fff;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dbe2ef;
+      border-radius: var(--radius);
+      font-size: 15px;
     }
-    textarea { min-height:180px; resize:vertical; line-height:1.45; color:#082034; }
+    textarea { min-height: 150px; }
 
-    .row { display:flex; gap:10px; align-items:center; }
-    .col { flex:1; }
-
-    .small { font-size:13px; color:var(--muted); }
-
-    /* Estimate & send area */
-    .estimate-box { min-width:140px; text-align:right; }
-    .estimate-inner { background: linear-gradient(180deg,#ffffff,#fbfdff); padding:10px 12px; border-radius:10px; border:1px dashed rgba(51,102,204,0.08); font-weight:800; color:#06324a; }
-    .send-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:6px; }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
     .btn {
-      padding:14px 16px; border-radius:12px; border:0; cursor:pointer; font-weight:800; font-size:15px;
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      flex: 1 1 200px;
+      padding: 14px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      border: none;
     }
     .btn-email {
-      background: var(--accent-strong); color:white; box-shadow: 0 12px 28px rgba(43,124,255,0.08); flex:1 1 220px;
+      background: var(--primary);
+      color: white;
     }
-    .btn-message {
-      background: linear-gradient(90deg,#8ad3ff,#7bd389); color:white; box-shadow:0 12px 28px rgba(10,120,140,0.08); flex:1 1 220px;
+    .btn-email:hover { background: var(--primary-hover); }
+    .btn-imessage {
+      background: var(--accent);
+      color: white;
     }
-    .btn-ghost { background:transparent; border:1px solid rgba(7,32,55,0.06); color:var(--muted); padding:12px 14px; border-radius:12px; cursor:pointer; }
+    .btn-imessage:hover { background: var(--accent-hover); }
 
-    /* status & toasts */
-    .status { margin-top:10px; min-height:36px; }
-    .notice { padding:10px; border-radius:8px; font-weight:700; }
-    .notice.success { background: #ecfdf5; border-left:4px solid var(--success); color:#065f46; }
-    .notice.error { background: #fff5f5; border-left:4px solid var(--danger); color:#7f1d1d; }
+    .status { min-height: 28px; font-size: 14px; margin-top: 8px; }
+    .notice { padding: 10px; border-radius: 8px; }
+    .notice.success { background: #ecfdf5; color: #065f46; }
+    .notice.error { background: #fef2f2; color: #7f1d1d; }
 
-    /* accessibility focus */
-    input:focus, textarea:focus, select:focus, button:focus { outline:3px solid rgba(59,130,246,0.12); outline-offset:3px; }
-
-    /* small screen polish */
-    @media(min-width:900px) {
-      .two-col { display:grid; grid-template-columns: 1fr 340px; gap:14px; align-items:start; }
-      form .row { gap:14px; }
+    /* Price calculator */
+    .calc-options { display: grid; gap: 14px; }
+    .calc-result {
+      margin-top: 16px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
+    <div class="header">
+      <h1>Writer90a Quick Service Form</h1>
+      <p>Coursework Help Service</p>
+      <button class="btn-top" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">
+        💰 Calculate Price
+      </button>
+    </div>
 
-    <!-- MAIN CARD: form-first -->
-    <div class="card" role="region" aria-labelledby="formTitle">
-      <div class="header">
-        <div class="brand" aria-hidden="true">HH</div>
-        <div style="flex:1">
-          <h1 id="formTitle">Type your problem — send by Email or iMessage</h1>
-          <p class="lead small">Paste the exact problem first. Include steps you tried and a deadline. Choose Email for full submissions or iMessage for quick contact.</p>
+    <!-- PRICE CALCULATOR -->
+    <div class="card" id="calculator">
+      <h2>Price Calculator</h2>
+      <div class="calc-options">
+        <label for="serviceType">Choose Service</label>
+        <select id="serviceType">
+          <option value="">-- Select --</option>
+          <option value="assignment">Assignment</option>
+          <option value="coursework">Coursework</option>
+          <option value="wholeclass">Whole Class</option>
+        </select>
+
+        <div id="assignmentPages" style="display:none">
+          <label for="pages">Number of pages</label>
+          <input type="number" id="pages" min="1" value="1">
         </div>
+
+        <div class="calc-result" id="calcResult">Select a service to see price</div>
       </div>
+    </div>
 
-      <!-- Form (Formspree action used as fallback for no-JS) -->
+    <!-- FORM -->
+    <div class="card">
       <form id="contactForm" action="https://formspree.io/f/xkgvabpd" method="POST" novalidate>
-        <!-- Large textarea first -->
-        <label for="details">Assignment details (paste the full problem here)</label>
-        <textarea id="details" name="message" placeholder="Paste the problem and show where you're stuck. Include deadline and any links to attachments." required></textarea>
-
-        <!-- Name / Email row -->
-        <div class="row">
-          <div class="col">
-            <label for="name">Your name</label>
-            <input id="name" name="name" type="text" placeholder="e.g., Jane Doe" required>
-          </div>
-          <div class="col">
-            <label for="email">Your email</label>
-            <input id="email" name="_replyto" type="email" placeholder="you@example.com" required>
-          </div>
+        <div>
+          <label for="details">Assignment / Coursework Details</label>
+          <textarea id="details" name="message" placeholder="Explain what you need help with (e.g., I have been doing this class but it’s overwhelming…)" required></textarea>
         </div>
 
-        <!-- Urgency + estimate -->
-        <div class="row" style="align-items:center">
-          <div style="flex:1">
-            <label for="urgency">Urgency</label>
-            <select id="urgency" name="urgency">
-              <option value="normal">Normal (72h)</option>
-              <option value="fast">Fast (48h)</option>
-              <option value="rush">Rush (24h)</option>
-              <option value="immediate">Immediate (12h)</option>
-            </select>
-          </div>
-
-          <div class="estimate-box" aria-hidden="false">
-            <div style="font-size:12px;color:var(--muted);text-align:right">Estimate</div>
-            <div class="estimate-inner" id="estimate">$8.00 (est.)</div>
-          </div>
+        <div>
+          <label for="email">Your Email</label>
+          <input id="email" name="_replyto" type="email" placeholder="you@example.com" required>
         </div>
 
-        <!-- hidden subject & price for Formspree -->
-        <input type="hidden" id="hidden_subject" name="_subject" value="Homework Help Request">
-        <input type="hidden" id="hidden_price" name="estimated_price" value="8.00">
+        <input type="hidden" id="hidden_subject" name="_subject" value="Coursework Help Request">
+        <input type="hidden" id="hidden_price" name="estimated_price" value="">
 
-        <!-- honeypot anti-spam -->
-        <div style="display:none;visibility:hidden">
-          <label>Leave this empty</label>
-          <input name="_gotcha" type="text" autocomplete="off">
+        <input type="text" name="_gotcha" style="display:none">
+
+        <div class="btn-row">
+          <button type="button" id="sendEmail" class="btn btn-email">📩 Send via Email</button>
+          <button type="button" id="sendIMessage" class="btn btn-imessage">📱 Send via iMessage</button>
         </div>
 
-        <!-- Very visible send controls (no popup) -->
-        <div class="send-row" role="group" aria-label="Send options">
-          <button type="button" id="sendEmail" class="btn btn-email" aria-label="Send request by email">
-            📩 Send by Email
-          </button>
-
-          <button type="button" id="sendIMessage" class="btn btn-message" aria-label="Send request via iMessage">
-            📱 Send via iMessage
-          </button>
-
-          <!-- Optional copy fallback -->
-          <button type="button" id="copyBtn" class="btn-ghost" aria-label="Copy message to clipboard">Copy message</button>
-        </div>
-
-        <!-- status area for messages -->
         <div class="status" id="status" aria-live="polite"></div>
       </form>
     </div>
-
-    <!-- small info card (keeps page not empty) -->
-    <div style="height:12px"></div>
-    <div class="card">
-      <div class="small">Tip: For long attachments paste Drive/Dropbox links directly into the details box. iMessage works best on iPhone/Mac where the Apple ID is registered. Email goes to <strong>caronrispat@gmail.com</strong>.</div>
-    </div>
-
   </div>
 
   <script>
-    /* ===========================
-       Homework Helper - No-popup version
-       - Lighter outer colouring
-       - Two big send buttons visible (Email & iMessage)
-       - Formspree AJAX send for Email with fallback to native form action
-       - iMessage uses sms:recipient?body=... and includes "Urgent tasks" phrase
-       =========================== */
+    (function(){
+      const serviceType = document.getElementById('serviceType');
+      const pagesInput = document.getElementById('pages');
+      const assignmentPages = document.getElementById('assignmentPages');
+      const resultEl = document.getElementById('calcResult');
+      const hiddenPrice = document.getElementById('hidden_price');
 
-    (function () {
-      // CONFIG: adjust only these
-      const FORM_ENDPOINT = 'https://formspree.io/f/xkgvabpd'; // your Formspree endpoint
-      const IMESSAGE_RECIPIENT = 'caronrispat@gmail.com';     // iMessage recipient
-      const MIN_CHARGE = 8.00;
-      const BASE_PER_PAGE = 8.00;
+      function calculatePrice(){
+        let priceText = '';
+        let price = 0;
+        const type = serviceType.value;
 
-      // refs
+        if(type === 'assignment'){
+          assignmentPages.style.display = 'block';
+          const pages = parseInt(pagesInput.value) || 1;
+          price = Math.max(10, pages * 10); // cheap assignment pricing
+          priceText = `Assignment (${pages} page${pages>1?'s':''}): $${price}`;
+        } else if(type === 'coursework'){
+          assignmentPages.style.display = 'none';
+          price = 100;
+          priceText = 'Coursework package: $100 (typical range $80–$200)';
+        } else if(type === 'wholeclass'){
+          assignmentPages.style.display = 'none';
+          price = 600;
+          priceText = 'Whole class package: $600 (range $500–$800)';
+        } else {
+          assignmentPages.style.display = 'none';
+          priceText = 'Select a service to see price';
+        }
+
+        resultEl.textContent = priceText;
+        hiddenPrice.value = price || '';
+      }
+
+      serviceType.addEventListener('change', calculatePrice);
+      pagesInput.addEventListener('input', calculatePrice);
+
+      // Form logic
       const form = document.getElementById('contactForm');
       const details = document.getElementById('details');
-      const nameFld = document.getElementById('name');
       const emailFld = document.getElementById('email');
-      const urgency = document.getElementById('urgency');
-      const estimateEl = document.getElementById('estimate');
-      const hiddenPrice = document.getElementById('hidden_price');
-      const hiddenSubject = document.getElementById('hidden_subject');
       const sendEmailBtn = document.getElementById('sendEmail');
       const sendIMessageBtn = document.getElementById('sendIMessage');
-      const copyBtn = document.getElementById('copyBtn');
       const status = document.getElementById('status');
+      const FORM_ENDPOINT = 'https://formspree.io/f/xkgvabpd';
+      const IMESSAGE_RECIPIENT = 'caronrispat@gmail.com';
 
-      // helper: show status notice (auto-hide)
-      function showStatus(type, text) {
-        status.innerHTML = `<div class="notice ${type === 'ok' ? 'success' : 'error'}">${escapeHtml(text)}</div>`;
-        setTimeout(()=> { if(status.firstChild) status.removeChild(status.firstChild); }, 3500);
+      function showStatus(type,msg){
+        status.innerHTML = `<div class="notice ${type==='ok'?'success':'error'}">${msg}</div>`;
+        setTimeout(()=>{ status.innerHTML=''; },3500);
       }
 
-      // simple estimate: words -> pages heuristics
-      function calculateEstimate() {
-        const text = (details.value || '').trim();
-        const words = text ? text.split(/\s+/).length : 0;
-        let pages = 1;
-        if (words > 400) pages = Math.ceil(words / 300);
-        let est = BASE_PER_PAGE * pages;
-        const u = urgency.value;
-        if (u === 'fast') est *= 1.25;
-        if (u === 'rush') est *= 1.5;
-        if (u === 'immediate') est *= 2.0;
-        if (est < MIN_CHARGE) est = MIN_CHARGE;
-        est = Math.round(est * 100) / 100;
-        estimateEl.textContent = `$${est.toFixed(2)} (est.)`;
-        hiddenPrice.value = est.toFixed(2);
-        hiddenSubject.value = `Homework Help Request — $${est.toFixed(2)}`;
-        return est;
-      }
-
-      // build prefilled message (starts with "Urgent tasks")
-      function buildPrefillMessage() {
-        const n = (nameFld.value || '').trim() || '[no name]';
-        const e = (emailFld.value || '').trim() || '[no email]';
-        const d = (details.value || '').trim() || '[no details provided]';
-        const u = urgency.value || 'normal';
-        const price = hiddenPrice.value || calculateEstimate();
-        const lines = [
-          'Urgent tasks: Please assist with coursework.',
-          '',
-          'Name: ' + n,
-          'Email: ' + e,
-          'Urgency: ' + u,
-          'Estimated price: $' + price,
-          '',
-          'Details:',
-          d,
-          '',
-          '(Sent from Homework Helper)'
-        ];
-        return lines.join('\n');
-      }
-
-      // utility: escape for HTML
-      function escapeHtml(s) {
-        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-      }
-
-      // send email via fetch (AJAX) to Formspree
-      async function sendEmail() {
-        // basic validation
-        if (!details.value.trim()) {
-          showStatus('error', 'Please paste the assignment details before sending.');
-          details.focus();
-          return;
-        }
-        if (!nameFld.checkValidity() || !emailFld.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
-        sendEmailBtn.disabled = true;
-        sendEmailBtn.textContent = 'Sending…';
-
-        // ensure estimate & subject set
-        calculateEstimate();
-
-        try {
+      async function sendEmail(){
+        if(!form.checkValidity()){ form.reportValidity(); return; }
+        sendEmailBtn.textContent='Sending…'; sendEmailBtn.disabled=true;
+        try{
           const fd = new FormData(form);
-          // ensure hidden fields are set
-          fd.set('_subject', hiddenSubject.value);
-          fd.set('estimated_price', hiddenPrice.value);
-
-          const res = await fetch(FORM_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: fd
-          });
-
-          if (res.ok) {
-            showStatus('ok', 'Request sent — check your email for confirmation.');
-            // clear details for convenience
-            details.value = '';
-            calculateEstimate();
-          } else {
-            // try to parse response JSON for an error message
-            let data = null;
-            try { data = await res.json(); } catch(e) { /* ignore */ }
-            const msg = data && data.error ? data.error : 'Send failed — try again or use iMessage.';
-            showStatus('error', msg);
-          }
-        } catch (err) {
-          showStatus('error', 'Network error. Try iMessage or try again.');
-        } finally {
-          sendEmailBtn.disabled = false;
-          sendEmailBtn.textContent = '📩 Send by Email';
-        }
+          const res = await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Accept':'application/json'},body:fd});
+          if(res.ok){ showStatus('ok','Request sent successfully!'); form.reset(); }
+          else showStatus('error','Send failed. Try iMessage.');
+        }catch(e){ showStatus('error','Network error. Try again.'); }
+        finally{ sendEmailBtn.textContent='📩 Send via Email'; sendEmailBtn.disabled=false; }
       }
 
-      // open iMessage using sms: scheme, using email as recipient (works where Apple accepts)
-      function sendIMessage() {
-        if (!details.value.trim()) {
-          showStatus('error', 'Please paste the assignment details before sending.');
-          details.focus();
-          return;
-        }
-        // update estimate and subject
-        calculateEstimate();
-        const body = buildPrefillMessage();
-        const encoded = encodeURIComponent(body);
-        const smsUrl = `sms:${IMESSAGE_RECIPIENT}?body=${encoded}`;
-        // attempt to open Messages
-        window.location.href = smsUrl;
+      function sendIMessage(){
+        if(!details.value.trim()){ showStatus('error','Enter details first.'); return; }
+        const body = `Urgent tasks: Coursework help needed.\n\nEmail: ${emailFld.value}\n\nDetails:\n${details.value}\n\nEstimated price: $${hiddenPrice.value||'N/A'}`;
+        const url = `sms:${IMESSAGE_RECIPIENT}?body=${encodeURIComponent(body)}`;
+        window.location.href=url;
       }
 
-      // copy message fallback
-      function copyMessage() {
-        const body = buildPrefillMessage();
-        navigator.clipboard.writeText(body).then(()=> {
-          showStatus('ok', 'Message copied to clipboard — paste into your app.');
-        }, ()=> {
-          showStatus('error', 'Copy failed — please select the preview text and copy manually.');
-        });
-      }
-
-      // live update estimate as user types
-      [details, urgency].forEach(el => el.addEventListener('input', calculateEstimate));
-      [nameFld, emailFld, details, urgency].forEach(el => el.addEventListener('input', ()=> { /* keep subject updated */ calculateEstimate(); }));
-
-      // attach click handlers
-      sendEmailBtn.addEventListener('click', function(e){ e.preventDefault(); sendEmail(); });
-      sendIMessageBtn.addEventListener('click', function(e){ e.preventDefault(); sendIMessage(); });
-      copyBtn.addEventListener('click', function(e){ e.preventDefault(); copyMessage(); });
-
-      // ensure hidden fields kept up-to-date before any native submit
-      form.addEventListener('submit', function(){
-        calculateEstimate();
-        // native submit will use action attribute (Formspree) if JS disabled or someone triggers submit
-        // hidden inputs are already updated by calculateEstimate()
-      });
-
-      // init
-      calculateEstimate();
-
+      sendEmailBtn.addEventListener('click', sendEmail);
+      sendIMessageBtn.addEventListener('click', sendIMessage);
     })();
   </script>
 </body>
