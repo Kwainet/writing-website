@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Homework Helper — Send Homework Request</title>
+  <meta name="description" content="Type your homework problem and send via email or iMessage. Fast, mobile-first form." />
+  <style>
+    /* -------------------------
+       Mobile-first colorful UI
+       ------------------------- */
+    :root{
+      --bg-a: #6a11cb;
+      --bg-b: #2575fc;
+      --card: #ffffff;
+      --muted: #475569;
+      --accent: #7b2ff7;
+      --accent-2: #2b7cff;
+      --success: #10b981;
+      --danger: #ef4444;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(11,12,40,0.12);
+      --max-w: 980px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#062034;background:linear-gradient(180deg,var(--bg-a),var(--bg-b));-webkit-font-smoothing:antialiased}
+    a{color:inherit}
+    .wrap{max-width:var(--max-w);margin:18px auto;padding:16px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;overflow:hidden}
+    /* header/title */
+    .title-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+    h1{margin:0;font-size:18px}
+    p.lead{margin:6px 0 0;color:var(--muted)}
+    /* form-first layout */
+    form#contactForm{display:grid;gap:12px;margin-top:12px}
+    label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;color:#072034}
+    textarea,input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #e6eef8;font-size:15px;box-shadow:0 8px 22px rgba(11,12,40,0.04)}
+    textarea{min-height:180px;resize:vertical}
+    .row{display:flex;gap:10px}
+    .row .col{flex:1}
+    .small{font-size:13px;color:var(--muted)}
+    /* prominent send area */
+    .send-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .btn-big{
+      flex:1 1 220px;
+      padding:14px 16px;border-radius:12px;border:0;color:white;font-weight:800;font-size:16px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));cursor:pointer;box-shadow:0 12px 30px rgba(43,124,255,0.14)
+    }
+    .btn-ghost{flex:1 1 140px;padding:12px;border-radius:12px;border:1px solid rgba(7,32,55,0.06);background:transparent;color:var(--muted);cursor:pointer}
+    .estimate{min-width:140px;text-align:right}
+    .estimate .box{background:linear-gradient(180deg,#fff,#fbfbff);padding:10px;border-radius:10px;border:1px dashed rgba(43,124,255,0.12);font-weight:800;color:#0b2b4a}
+    /* modal overlay */
+    .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.56);z-index:9999;padding:18px}
+    .modal{width:100%;max-width:720px;background:var(--card);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+    .modal h2{margin:0 0 6px 0}
+    .modal p{margin:0 0 12px 0;color:var(--muted)}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .opt{padding:12px;border-radius:10px;color:white;display:flex;flex-direction:column;gap:8px;cursor:pointer}
+    .opt:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(11,12,40,0.08)}
+    .opt-email{background:linear-gradient(90deg,#7b2ff7,#2b7cff)}
+    .opt-msg{background:linear-gradient(90deg,#00c6ff,#0072ff)}
+    .preview{background:rgba(255,255,255,0.06);padding:10px;border-radius:8px;max-height:140px;overflow:auto;font-size:13px;color:rgba(255,255,255,0.95)}
+    .modal-actions{display:flex;justify-content:flex-end;margin-top:12px;gap:8px}
+    .btn-outline{padding:8px 12px;border-radius:10px;border:1px solid rgba(7,32,55,0.06);background:transparent;cursor:pointer}
+    /* status messages */
+    .notice{padding:10px;border-radius:10px;font-weight:700}
+    .notice.success{background:#ecfdf5;border-left:4px solid var(--success);color:#065f46}
+    .notice.error{background:#fff5f5;border-left:4px solid var(--danger);color:#7f1d1d}
+    /* small screens adjustments */
+    @media(min-width:900px){ .row {flex-direction:row} .send-row{flex-wrap:nowrap} }
+    /* focus outlines */
+    input:focus,textarea:focus,select:focus,button:focus{outline:3px solid rgba(43,124,255,0.12);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="card" role="region" aria-labelledby="formTitle">
+      <div class="title-row">
+        <div class="logo" aria-hidden="true">HH</div>
+        <div style="flex:1">
+          <h1 id="formTitle">Type your problem — send by Email or iMessage</h1>
+          <p class="lead small">Paste the exact question and any steps you've done. Use iMessage for quick chat (iPhone/Mac) or Email to send full details.</p>
+        </div>
+      </div>
+
+      <!-- Form: large textarea first (users type the problem first) -->
+      <form id="contactForm" action="https://formspree.io/f/xkgvabpd" method="POST" novalidate>
+        <label for="details">Assignment details (paste the full problem here)</label>
+        <textarea id="details" name="message" placeholder="Paste the problem and show where you're stuck. Include deadline (e.g., 2025-09-18 14:00) and links to attachments." required></textarea>
+
+        <div class="row" style="margin-top:6px">
+          <div class="col">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" placeholder="e.g., Jane Doe" required>
+          </div>
+          <div class="col">
+            <label for="email">Your email</label>
+            <input id="email" name="_replyto" type="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+
+        <div class="row" style="align-items:center">
+          <div style="flex:1">
+            <label for="urgency">Urgency</label>
+            <select id="urgency" name="urgency">
+              <option value="normal">Normal (72h)</option>
+              <option value="fast">Fast (48h)</option>
+              <option value="rush">Rush (24h)</option>
+              <option value="immediate">Immediate (12h)</option>
+            </select>
+          </div>
+
+          <div class="estimate" aria-hidden="false">
+            <div style="font-size:12px;color:var(--muted);text-align:right">Estimate</div>
+            <div class="box" id="estimate">$8.00 (est.)</div>
+          </div>
+        </div>
+
+        <!-- hidden fields for Formspree -->
+        <input type="hidden" id="hiddenSubject" name="_subject" value="Homework Help Request">
+        <input type="hidden" id="hiddenPrice" name="estimated_price" value="8.00">
+
+        <!-- honeypot -->
+        <div style="display:none;visibility:hidden">
+          <label>Leave this empty</label>
+          <input name="_gotcha" type="text" autocomplete="off">
+        </div>
+
+        <!-- prominent send controls -->
+        <div class="send-row" style="margin-top:8px">
+          <button type="button" id="openSend" class="btn-big" aria-haspopup="dialog" aria-controls="sendModal">Send — choose Email or iMessage</button>
+          <button type="submit" id="directSend" class="btn-ghost">Direct Send (Email)</button>
+        </div>
+
+        <div id="status" style="margin-top:10px" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <!-- Minimal information card (optional, small) -->
+    <div style="height:12px"></div>
+    <div class="card" style="padding:12px">
+      <div class="small">Use Message for short/urgent queries on iPhone or Mac. Use Email to send full problems and links. Attach large files by pasting a drive link in the details.</div>
+    </div>
+
+  </div>
+
+  <!-- Modal for choosing Email or iMessage -->
+  <div id="sendModal" class="overlay" role="dialog" aria-modal="true" aria-hidden="true" style="display:none">
+    <div class="modal" role="document" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Send request</h2>
+      <p class="small">Choose how to send this request. <strong>Email</strong> sends full details to <code>caronrispat@gmail.com</code>. <strong>iMessage</strong> opens Messages prefilled and includes <strong>“Urgent tasks”</strong> at the top.</p>
+
+      <div style="margin-bottom:12px">
+        <div style="font-weight:700;margin-bottom:6px">Preview</div>
+        <div id="preview" class="preview" aria-live="polite"></div>
+      </div>
+
+      <div class="options" role="list">
+        <div id="optEmail" class="opt opt-email" role="button" tabindex="0" aria-pressed="false">
+          <div style="font-size:18px;font-weight:800">📩 Send by Email</div>
+          <div class="small">Sends the full request to <strong>caronrispat@gmail.com</strong> via Formspree (recommended for long problems and attachments).</div>
+          <div style="margin-top:auto;width:100%"><button id="sendEmailBtn" class="btn-big" style="width:100%;">Send Email</button></div>
+        </div>
+
+        <div id="optMsg" class="opt opt-msg" role="button" tabindex="0" aria-pressed="false">
+          <div style="font-size:18px;font-weight:800">📱 Send via iMessage</div>
+          <div class="small">Opens Messages with a prefilled message that starts with <strong>“Urgent tasks”</strong>. Works best on iPhone/iPad/Mac.</div>
+          <div style="margin-top:auto;width:100%"><button id="sendMsgBtn" class="btn-big" style="width:100%;">Open iMessage</button></div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="closeModal" class="btn-outline">Cancel</button>
+        <button id="copyBtn" class="btn-outline">Copy message</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- small toasts -->
+  <div id="toastSuccess" style="position:fixed;right:16px;bottom:16px;display:none;z-index:99999"><div class="notice success">Request sent — check your email for confirmation.</div></div>
+  <div id="toastError" style="position:fixed;right:16px;bottom:16px;display:none;z-index:99999"><div class="notice error">Sending failed — try iMessage or try again.</div></div>
+
+  <script>
+    /* --------------------------
+       Main behavior (concise + robust)
+       -------------------------- */
+    (function(){
+      // Config
+      const FORMSPREE = 'https://formspree.io/f/xkgvabpd'; // user-provided endpoint
+      const IMESSAGE_TO = 'caronrispat@gmail.com';        // recipient for iMessage
+      const MIN_CHARGE = 8.00;
+      const BASE_PER_PAGE = 8.00; // simple pricing
+
+      // Elements
+      const detailsEl = document.getElementById('details');
+      const nameEl = document.getElementById('name');
+      const emailEl = document.getElementById('email');
+      const urgencyEl = document.getElementById('urgency');
+      const estimateEl = document.getElementById('estimate');
+      const hiddenPrice = document.getElementById('hiddenPrice');
+      const hiddenSubject = document.getElementById('hiddenSubject');
+      const openSend = document.getElementById('openSend');
+      const sendModal = document.getElementById('sendModal');
+      const preview = document.getElementById('preview');
+      const sendEmailBtn = document.getElementById('sendEmailBtn');
+      const sendMsgBtn = document.getElementById('sendMsgBtn');
+      const closeModal = document.getElementById('closeModal');
+      const copyBtn = document.getElementById('copyBtn');
+      const toastSuccess = document.getElementById('toastSuccess');
+      const toastError = document.getElementById('toastError');
+      const optEmail = document.getElementById('optEmail');
+      const optMsg = document.getElementById('optMsg');
+      const status = document.getElementById('status');
+      const contactForm = document.getElementById('contactForm');
+
+      // Utility: show toast
+      function show(el){
+        el.style.display = 'block';
+        setTimeout(()=> el.style.display = 'none', 3000);
+      }
+
+      // Simple estimate: based on word count -> pages
+      function calcEstimate(){
+        const text = (detailsEl.value || '').trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        let pages = 1;
+        if(words > 350) pages = Math.ceil(words / 300);
+        let est = BASE_PER_PAGE * pages;
+        const urgency = urgencyEl.value;
+        if(urgency === 'fast') est *= 1.25;
+        if(urgency === 'rush') est *= 1.5;
+        if(urgency === 'immediate') est *= 2.0;
+        est = Math.max(est, MIN_CHARGE);
+        est = Math.round(est * 100) / 100;
+        estimateEl.textContent = `$${est.toFixed(2)} (est.)`;
+        hiddenPrice.value = est.toFixed(2);
+        hiddenSubject.value = `Homework Help — $${est.toFixed(2)}`;
+        return est;
+      }
+
+      // Build the message (includes "Urgent tasks" at top)
+      function buildMessage(){
+        const name = (nameEl.value || '').trim() || '[no name]';
+        const email = (emailEl.value || '').trim() || '[no email]';
+        const details = (detailsEl.value || '').trim() || '[no details provided]';
+        const urgency = urgencyEl.value || 'normal';
+        const price = hiddenPrice.value || calcEstimate();
+        const lines = [
+          'Urgent tasks: Please help with coursework.',
+          '',
+          'Name: ' + name,
+          'Email: ' + email,
+          'Urgency: ' + urgency,
+          'Estimated price: $' + price,
+          '',
+          'Details:',
+          details,
+          '',
+          '(Sent from Homework Helper)'
+        ];
+        return lines.join('\n');
+      }
+
+      // Update preview inside modal (escaped for display)
+      function updatePreview(){
+        const text = buildMessage();
+        // Show text with line breaks preserved
+        preview.textContent = text;
+      }
+
+      // Open modal and set up preview
+      openSend.addEventListener('click', function(e){
+        e.preventDefault();
+        // Basic validation to let user know required fields
+        if(!detailsEl.value.trim()){
+          status.innerHTML = '<div class="notice error">Please paste the assignment details before sending.</div>';
+          setTimeout(()=> status.innerHTML = '', 2800);
+          detailsEl.focus();
+          return;
+        }
+        calcEstimate();
+        updatePreview();
+        sendModal.style.display = 'flex';
+        sendModal.setAttribute('aria-hidden','false');
+        // focus first option
+        sendEmailBtn.focus();
+        document.body.style.overflow = 'hidden';
+      });
+
+      // Close modal
+      function closeSendModal(){
+        sendModal.style.display = 'none';
+        sendModal.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+      closeModal.addEventListener('click', closeSendModal);
+
+      // Keyboard on options for accessibility
+      [optEmail, optMsg].forEach(function(el){
+        el.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.querySelector('button').click(); }
+        });
+      });
+
+      // Copy message for fallback
+      copyBtn.addEventListener('click', function(){
+        const text = buildMessage();
+        navigator.clipboard.writeText(text).then(function(){
+          copyBtn.textContent = 'Copied!';
+          setTimeout(()=> copyBtn.textContent = 'Copy message', 1500);
+        }, function(){
+          alert('Copy failed — you can select the preview text and copy manually.');
+        });
+      });
+
+      // Send by email via fetch to Formspree (AJAX)
+      sendEmailBtn.addEventListener('click', async function(e){
+        e.preventDefault();
+        // Validate required fields
+        if(!nameEl.checkValidity() || !emailEl.checkValidity() || !detailsEl.checkValidity()){
+          contactForm.reportValidity();
+          return;
+        }
+        sendEmailBtn.disabled = true;
+        sendEmailBtn.textContent = 'Sending…';
+
+        // Update price & subject before sending
+        calcEstimate();
+        updatePreview();
+
+        // Build form data and post
+        try{
+          const formData = new FormData(contactForm);
+          // Ensure hidden values exist
+          formData.set('_subject', hiddenSubject.value);
+          formData.set('estimated_price', hiddenPrice.value);
+
+          const res = await fetch(FORMSPREE, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: formData
+          });
+
+          if(res.ok){
+            // success
+            status.innerHTML = '<div class="notice success">Request sent — check your email for confirmation.</div>';
+            show(toastSuccess);
+            // Clear details for convenience, leave name+email
+            detailsEl.value = '';
+            calcEstimate();
+            updatePreview();
+            // close modal shortly
+            setTimeout(()=> { status.innerHTML = ''; closeSendModal(); }, 900);
+          } else {
+            // parse possible JSON error
+            let data = null;
+            try { data = await res.json(); } catch(_) { /* ignore */ }
+            const errMsg = (data && data.error) ? data.error : 'Failed to send. Try iMessage or try again.';
+            status.innerHTML = `<div class="notice error">${errMsg}</div>`;
+            show(toastError);
+          }
+        } catch(err){
+          status.innerHTML = '<div class="notice error">Network error. Use iMessage or try again.</div>';
+          show(toastError);
+        } finally {
+          sendEmailBtn.disabled = false;
+          sendEmailBtn.textContent = 'Send Email';
+        }
+      });
+
+      // Open iMessage (sms: scheme with email recipient)
+      sendMsgBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        if(!detailsEl.value.trim()){
+          status.innerHTML = '<div class="notice error">Please add details before using iMessage.</div>';
+          setTimeout(()=> status.innerHTML = '', 2200);
+          detailsEl.focus();
+          return;
+        }
+        calcEstimate();
+        const msg = buildMessage();
+        const encoded = encodeURIComponent(msg);
+        // Use sms: with email recipient (works where Apple ID accepts)
+        const smsUrl = `sms:${IMESSAGE_TO}?body=${encoded}`;
+        // Attempt to open iMessage/Message app
+        window.location.href = smsUrl;
+        // Close modal (we expect iMessage to open the app)
+        closeSendModal();
+      });
+
+      // Close modal on clicking overlay background
+      sendModal.addEventListener('click', function(e){
+        if(e.target === sendModal) closeSendModal();
+      });
+
+      // Close on Esc
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && sendModal.style.display === 'flex') closeSendModal();
+      });
+
+      // Live updates to estimate and preview
+      [detailsEl, urgencyEl, nameEl, emailEl].forEach(function(el){
+        el.addEventListener('input', function(){
+          calcEstimate();
+          updatePreview();
+        });
+      });
+
+      // Initialize
+      calcEstimate();
+      updatePreview();
+
+      // Direct send: the native HTML submit (fallback when JS disabled or user clicks directSend)
+      contactForm.addEventListener('submit', function(e){
+        // Let native HTML form submit happen (Formspree action is set) — but update hidden fields first
+        hiddenPrice.value = calcEstimate().toFixed(2);
+        hiddenSubject.value = 'Homework Help Request — $' + hiddenPrice.value;
+        // No preventDefault — allows fallback if user uses directSend
+      });
+    })();
+  </script>
+</body>
+</html>
